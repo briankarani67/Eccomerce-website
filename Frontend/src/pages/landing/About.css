@@ -1,0 +1,27 @@
+.about{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.aboutLeft, .aboutRight{
+    flex: 1;
+    padding: 2rem;
+}
+
+.aboutLeft{
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 7px;
+    background-color: rgb(49, 88, 10);
+    justify-content: center;
+    align-items: normal;
+}
+
+.aboutLeft .p{
+    display: flex;
+    justify-content: center;
+}

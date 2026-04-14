@@ -1,0 +1,11 @@
+.up{
+    display: flex;
+    padding: 30px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+}
+
+footer{
+    padding: 10px 7px;
+}

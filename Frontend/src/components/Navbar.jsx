@@ -5,12 +5,21 @@ import Home from '../pages/landing/Home';
 import About from '../pages/landing/About';
 import Announcement from '../pages/landing/Announcement';
 import Contact from '../pages/landing/Contact';
+import Button from '../reusedcomponents/Button';
+import logo from '../assets/images/logoo.png';
 
 function Navbar() {
+    function handleLogin () {
+                alert("Login button clicked");
+            }
+            
+    function handleSignup () {
+                alert("Sign up button clicked");
+            }
   return (
     <div>
         <nav className="navbar">
-            <h2 className='myappname'><Link to="/" className="logo">BRAINNES</Link></h2>
+            <h2 className='myappname'><Link to="/" className="logo"><img src={logo} alt="logo" style={{height:50}}/></Link></h2>
             <div className='right'>
             <ul className="navbar1">
                 <li><Link className="nav-link" to="/">Home</Link></li>
@@ -18,8 +27,9 @@ function Navbar() {
                 <li><Link className="nav-link" to="/announcement">Announcement</Link></li>
                 <li><Link className="nav-link" to="/contact">Contact</Link></li>
             </ul>
-            <button className="login-button">Login</button>
-            <button className="signup-button">Sign Up</button>
+            <Button text="Login" onclick={handleLogin} />
+            <Button text="Sign up" onclick={handleSignup} />
+            
             </div>
         </nav>
 

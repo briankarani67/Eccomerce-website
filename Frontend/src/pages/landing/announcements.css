@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  color: white;
+}
+
+.announcement-container {
+  padding: 60px 80px;
+  text-align: center;
+}
+
+.sub-title {
+  color: #00c3ff;
+}
+
+.title {
+  font-size: 36px;
+  margin: 10px 0;
+}
+
+.subtitle-text {
+  color: #aaa;
+  margin-bottom: 40px;
+}
+
+/* Layout */
+.content {
+  display: flex;
+  gap: 30px;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  gap: 20px;
+  flex: 3;
+}
+
+.card {
+  background: #4f9417;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #00c3ff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.card-body {
+  padding: 15px;
+  text-align: left;
+}
+
+.card-body h3 {
+  font-size: 18px;
+}
+
+.card-body p {
+  font-size: 14px;
+  color: #fff;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+/* Sidebar */
+.sidebar {
+  flex: 1;
+}
+
+.box {
+  background: #4f9417;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.recent {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.recent img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+}
