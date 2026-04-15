@@ -3,7 +3,7 @@ import "./announcements.css";
 import card1 from "../../assets/images/card1.jpg";
 import card2 from "../../assets/images/card2.jpg";
 import card3 from "../../assets/images/card3.jpg";
-import Footer from "../../reusedcomponents/Footer";
+import Footer from "../../components/Footer";
 
 const posts = [
   {

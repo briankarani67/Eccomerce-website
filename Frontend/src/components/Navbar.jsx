@@ -7,11 +7,16 @@ import Announcement from '../pages/landing/Announcement';
 import Contact from '../pages/landing/Contact';
 import Button from '../reusedcomponents/Button';
 import logo from '../assets/images/logoo.png';
+import Dashboard from '../pages/user/Dashboard';
+import { useNavigate } from 'react-router-dom';
+
 
 function Navbar() {
-    function handleLogin () {
-                alert("Login button clicked");
-            }
+    const navigate = useNavigate();
+
+  function handleLogin() {
+    navigate('/dashboard');   
+  }
             
     function handleSignup () {
                 alert("Sign up button clicked");
@@ -38,6 +43,7 @@ function Navbar() {
             <Route path="/about" element={<About/>} />
             <Route path="/announcement" element={<Announcement/>} />
             <Route path="/contact" element={<Contact/>} />
+            <Route path="/dashboard/*" element={<Dashboard/>} />
         </Routes>
 
     </div>
