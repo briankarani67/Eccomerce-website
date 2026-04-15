@@ -1,13 +1,8 @@
 import React from 'react';
 import './Navbar.css';
-import { Routes, Route, Link } from 'react-router-dom';
-import Home from '../pages/landing/Home';
-import About from '../pages/landing/About';
-import Announcement from '../pages/landing/Announcement';
-import Contact from '../pages/landing/Contact';
+import {Link } from 'react-router-dom';
 import Button from '../reusedcomponents/Button';
 import logo from '../assets/images/logoo.png';
-import Dashboard from '../pages/user/Dashboard';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -37,14 +32,6 @@ function Navbar() {
             
             </div>
         </nav>
-
-        <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/about" element={<About/>} />
-            <Route path="/announcement" element={<Announcement/>} />
-            <Route path="/contact" element={<Contact/>} />
-            <Route path="/dashboard/*" element={<Dashboard/>} />
-        </Routes>
 
     </div>
   )
