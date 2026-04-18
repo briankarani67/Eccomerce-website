@@ -1,16 +1,26 @@
- const express = require("express");
- const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
 
- const app = express();
+// Import your route files
+const authRoutes = require('./routes/authRoutes');
 
- const router = require("./routes/getting")
+const app = express();
 
- app.use("/", router)
- app.use(express.json());
- app.use(cors());
+// Middlewares
+app.use(cors());
+app.use(express.json()); // Essential to parse JSON in req.body
 
+// Mount Routes
+// This prefix means all auth routes start with /api/auth
+app.use('/api/auth', authRoutes);
 
- app.listen(3434, () => {
-    console.log("Server is running well at  http://localhost:3434");
- });
+// Simple Health Check
+app.get('/', (req, res) => {
+    res.send('Server is running perfectly.');
+});
 
+const PORT = process.env.PORT || 3306;
+app.listen(PORT, () => {
+    console.log(`Server is live on http://localhost:${PORT}`);
+});

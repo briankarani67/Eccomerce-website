@@ -8,6 +8,8 @@ import Announcement from './pages/landing/Announcement';
 import Contact from './pages/landing/Contact';
 import Dashboard from './pages/user/Dashboard';
 import './App.css'
+import Signup from './pages/auth/Signup';
+import Login from './pages/auth/Login';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
 
       {/* Dashboard route without Navbar */}
       <Route path="/dashboard/*" element={<Dashboard />} />
+      <Route path="/signup/*" element={<Signup />} />
+      <Route path="/login/*" element={<Login/>} />
     </Routes>
     </div>
   );

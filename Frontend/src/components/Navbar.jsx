@@ -10,11 +10,11 @@ function Navbar() {
     const navigate = useNavigate();
 
   function handleLogin() {
-    navigate('/dashboard');   
+    navigate('/login');   
   }
             
     function handleSignup () {
-                alert("Sign up button clicked");
+               navigate('/signup'); 
             }
   return (
     <div>
