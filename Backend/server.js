@@ -1,6 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
+
 
 // Import your route files
 const authRoutes = require('./routes/authRoutes');
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
     res.send('Server is running perfectly.');
 });
 
-const PORT = process.env.PORT || 3306;
+const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Server is live on http://localhost:${PORT}`);
 });

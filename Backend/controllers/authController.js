@@ -1,6 +1,6 @@
 const db = require('../config/db');
 const { hashPassword } = require('../utils/hashPassword');
-const { comparePassword } = require('../utils/hashpassword');
+const { comparePassword } = require('../utils/hashPassword');
 const { generateToken } = require('../utils/generateToken');
 
 exports.signup = async (req, res) => {

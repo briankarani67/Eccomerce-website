@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import './Signup.css'; // Import the styling
+import { signupUser } from '../../api/authApi'; // Import the API call function
 
 const Signup = () => {
     const [formData, setFormData] = useState({ username: '', email: '', password: '' });
     const [message, setMessage] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false); // New state
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        formData = '';
+        setIsSuccess(false);
         try {
             const response = await signupUser(formData);
             setMessage(response.data.message);
+            setIsSuccess(true); // Set success state to true
             // Optionally redirect to login page here
         } catch (error) {
             // This is where your specific backend errors (e.g., "Email taken") show up
             setMessage(error.response?.data?.message || "Something went wrong");
+            setIsSuccess(false); // Set success state to false
         }
     };
 
@@ -52,7 +56,11 @@ const Signup = () => {
                     <button type="submit" className="auth-btn">Sign Up</button>
                 </form>
                 
-                {message && <div className="status-msg">{message}</div>}
+                {message && (
+                    <div className={`status-msg ${isSuccess ? 'success' : 'error'}`}>
+                        {message}
+                    </div>
+        )}
                 
                 <p className="auth-footer">
                     Already have an account? <a href="/login">Login here</a>
