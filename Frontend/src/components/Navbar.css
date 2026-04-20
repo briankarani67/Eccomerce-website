@@ -1,4 +1,41 @@
-.navbar{
+:root {
+  --bg-main: #02140F;        /* very dark green (page background) */
+  --bg-card: #052E24;        /* hero section background */
+  --primary: #064E3B;        /* deep green */
+  --accent: #22C55E;         /* bright green (CTA buttons) */
+  --accent-hover: #16A34A;   /* darker hover green */
+
+  --text-main: #F9FAFB;      /* white text */
+  --text-muted: #9CA3AF;     /* grey text */
+
+  --border: #0F3D2E;         /* subtle borders */
+}
+
+.navbar {
+  background: rgba(2, 20, 15, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px 40px;
+  border-radius: 12px;
+  display: flex;
+  border: 1px solid var(--border);
+  position: sticky;
+  justify-content: space-between;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-link {
+  color: var(--text-main);
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+/* .navbar{
     display: flex;
     background-color: goldenrod;
     justify-content: space-between;
@@ -11,7 +48,7 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-}
+} */
 .navbar1{
     display: flex;
     justify-content: space-between;
@@ -23,18 +60,17 @@
     text-decoration: none;
 }
 
-.nav-link{
+/* .nav-link{
     text-decoration: none;
     color: white;
     background-color: coral;
     padding: 10px;
     border-radius: 12px;
-}
+} */
 
 .nav-link:focus{
     outline: none;
-    /* color:darkblue; */
-    background-color: rgb(158, 51, 9);
+    color: var(--accent);
 }
 .logo{
     text-decoration: none;

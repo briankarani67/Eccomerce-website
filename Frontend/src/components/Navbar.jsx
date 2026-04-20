@@ -17,7 +17,6 @@ function Navbar() {
                navigate('/signup'); 
             }
   return (
-    <div>
         <nav className="navbar">
             <h2 className='myappname'><Link to="/" className="logo"><img src={logo} alt="logo" style={{height:50}}/></Link></h2>
             <div className='right'>
@@ -32,8 +31,6 @@ function Navbar() {
             
             </div>
         </nav>
-
-    </div>
   )
 }
 

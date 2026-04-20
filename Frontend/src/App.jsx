@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import PublicLayout from './PublicLayout';
+import PublicLayout from './components/PublicLayout';
 import Home from './pages/landing/Home';
 import About from './pages/landing/About';
 import Announcement from './pages/landing/Announcement';

@@ -14,3 +14,18 @@ body{
 .public{
   padding: 0 50px;
 }
+
+/* This only affects pages inside PublicLayout */
+.container {
+    width: 100%;
+    max-width: 1200px; /* Standard width for e-commerce */
+    margin: 0 auto;    /* Centers the content */
+    padding: 0 40px;   /* Adds that missing space on left and right */
+    box-sizing: border-box;
+}
+
+/* Optional: If you want your navbar to also have the same alignment */
+.navbar {
+    padding: 10px 40px; /* Match the container padding */
+    /* ... keep your other sticky styles ... */
+}

@@ -27,7 +27,7 @@ const Login = () => {
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
             // Redirect to home or dashboard
-            navigate('/');
+            navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid email or password');
         } finally {
