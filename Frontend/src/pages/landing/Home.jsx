@@ -4,8 +4,18 @@ import freelance from '../../assets/images/freelancelog.png'
 import './Home.css'
 import Button from '../../reusedcomponents/Button'
 import Aboutus from './Aboutus'
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+   const navigate = useNavigate();
+  
+    function handleLogin() {
+      navigate('/login');   
+    }
+              
+      function handleSignup () {
+                 navigate('/signup'); 
+              }
   return (
     <div className="homecont">
       <div className="hero">
@@ -14,8 +24,8 @@ function Home() {
           <h1>1 Year of full working</h1>
           <p>With top most services earn on your own schedule, EARN AS YOU WISH.</p>
           <div className="auth">
-            <Button text="Login" onclick={() => alert("Login button clicked")} />
-            <Button text="Sign up" onclick={() => alert("Sign up button clicked")} />
+            <Button text="Login" onclick={handleLogin} />
+            <Button text="Sign up" onclick={handleSignup} />
           </div>
         </div>
         <div className="rightsidehero">
