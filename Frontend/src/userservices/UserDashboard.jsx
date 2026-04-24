@@ -72,7 +72,7 @@
 // export default Dashboard;
 
 import React, { useEffect, useState } from 'react';
-import { getGreeting } from '../utils/helper'; // The helper we made earlier
+import { getGreeting } from '../utils/Helper'; // The helper we made earlier
 import './UserDashboard.css';
 
 const DashboardHome = () => {
