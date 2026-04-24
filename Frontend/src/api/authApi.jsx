@@ -1,20 +1,12 @@
-// import axios from 'axios';
 
-// const API_URL = 'http://localhost:3306/api/auth';
-
-// export const signupUser = async (userData) => {
-//     return await axios.post(`${API_URL}/signup`, userData);
-// };
-
-// export const loginUser = async (credentials) => {
-//     return await axios.post(`${API_URL}/login`, credentials);
-// };
 
 import axios from 'axios';
 
 // Create an axios instance (Best practice)
+
+const API_URL = import.meta.env.VITE_API_URL || 'https://eccomerce-website-77zg.onrender.com';
 const API = axios.create({
-    baseURL: 'http://localhost:5000/api/auth',
+    baseURL: `${API_URL}/api/auth`,
     headers: {
         'Content-Type': 'application/json'
     }

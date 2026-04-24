@@ -10,13 +10,13 @@ const Profile = () => {
         phone: '',
         country: 'Kenya'
     });
-
+    const API_URL = import.meta.env.VITE_API_URL || 'https://eccomerce-website-77zg.onrender.com';
     useEffect(() => {
         const fetchProfile = async () => {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             try {
                 // Adjust the URL to your backend port
-                const res = await axios.get(`http://localhost:5000/api/auth/profile/${storedUser.id}`);
+                const res = await axios.get(`${API_URL}/api/auth/profile/${storedUser.id}`);
                 setFormData(res.data);
             } catch (err) {
                 console.error("Error fetching profile from database", err);
