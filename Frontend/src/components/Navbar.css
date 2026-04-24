@@ -58,6 +58,7 @@
     padding: 0 20px;
     gap: 20px;
     text-decoration: none;
+
 }
 
 /* .nav-link{
@@ -94,4 +95,148 @@
     border-radius: 8px;
     height: 30px;
     margin: 5px;
+}
+
+/* ... Keep your existing CSS variables and desktop styles ... */
+
+/* Hamburger Button Styling */
+.hamburger {
+    display: none; /* Hidden on desktop */
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    margin-right: 20px;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-main);
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+/* Mobile Media Query */
+@media (max-width: 922px) {
+    .hamburger {
+        display: flex; /* Show hamburger on mobile */
+        z-index: 1001;
+    }
+
+    /* Transform hamburger into an 'X' when open */
+    .bar.open:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .bar.open:nth-child(2) { opacity: 0; }
+    .bar.open:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .right {
+        display: none; /* Hide links by default on mobile */
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--bg-main);
+        flex-direction: column;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .right.active {
+        display: flex; /* Show links when hamburger is clicked */
+    }
+
+    .navbar1 {
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .nav-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .myappname {
+        margin-left: 20px;
+    }
+}
+
+/* --- Desktop Layout (Default) --- */
+.navbar {
+    background: rgba(2, 20, 15, 0.7);
+    backdrop-filter: blur(10px);
+    padding: 10px 40px;
+    display: flex;
+    align-items: center; /* Vertical centering */
+    justify-content: space-between; /* Logo on left, everything else on right */
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.right {
+    display: flex;
+    align-items: center; /* Keeps links and buttons on the same horizontal line */
+    gap: 30px; /* Space between the UL and the Buttons */
+}
+
+.navbar1 {
+    display: flex;
+    list-style: none;
+    justify-content: start;
+    margin: 0;
+    padding: 0;
+    gap: 20px; /* Space between individual links */
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Space between Login and Sign Up */
+}
+
+/* --- Mobile Layout (768px and below) --- */
+@media (max-width: 922px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .right {
+        display: none; /* Hide menu initially */
+        position: absolute;
+        top: 100%; /* Sits exactly below the navbar */
+        left: 0;
+        width: 100%;
+        background: var(--bg-main);
+        flex-direction: column; /* Stacks links on top of buttons */
+        padding: 30px 0;
+        gap: 25px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .right.active {
+        display: flex;
+    }
+
+    .navbar1 {
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        gap: 20px;
+    }
+
+    .nav-buttons {
+        flex-direction: row; /* Keeps Login/Signup side-by-side on mobile */
+        justify-content: center;
+        width: 100%;
+    }
+
+    .myappname {
+        margin-left: 0;
+    }
+    .nav-link{
+        display: flex;
+        justify-content: start;
+    }
 }

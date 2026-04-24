@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { loginUser } from '../../api/authApi';
 import './Login.css'; // Create this file in the same folder
+import LoadingOverlay from './LoadingOverlay';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -37,6 +38,7 @@ const Login = () => {
 
     return (
         <div className="login-wrapper">
+            {loading && <LoadingOverlay />}
             <div className="login-card">
                 <div className="login-header">
                     <h2>Welcome Back</h2>
@@ -74,7 +76,7 @@ const Login = () => {
                     </div>
 
                     <button type="submit" className="login-button" disabled={loading}>
-                        {loading ? 'Signing in...' : 'Sign In'}
+                        {loading ? 'Signing In...' : 'Sign In'}
                     </button>
                 </form>
 

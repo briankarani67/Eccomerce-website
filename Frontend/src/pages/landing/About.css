@@ -21,7 +21,7 @@ body{
     border: none;
     border-radius: 7px;
     background-color: #A3C9A8;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: normal;
     color: #064420;
 }
@@ -31,4 +31,11 @@ body{
     justify-content: center;
     font-weight: 600;
     font-size: 15px;
+}
+
+@media (max-width: 768px) {
+    .about{
+        display: flex;
+        flex-direction: column;
+    }
 }

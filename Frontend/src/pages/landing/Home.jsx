@@ -1,5 +1,4 @@
 import React from 'react'
-import Footer from '../../components/Footer'
 import freelance from '../../assets/images/freelancelog.png'
 import './Home.css'
 import Button from '../../reusedcomponents/Button'
@@ -34,7 +33,6 @@ function Home() {
         
       </div>
       <Aboutus/>
-        <Footer/>
     </div>
   )
 }

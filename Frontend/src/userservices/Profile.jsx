@@ -10,7 +10,7 @@ const Profile = () => {
         phone: '',
         country: 'Kenya'
     });
-    const API_URL = import.meta.env.VITE_API_URL || 'https://eccomerce-website-77zg.onrender.com';
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     useEffect(() => {
         const fetchProfile = async () => {
             const storedUser = JSON.parse(localStorage.getItem('user'));

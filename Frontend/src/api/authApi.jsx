@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Create an axios instance (Best practice)
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://eccomerce-website-77zg.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const API = axios.create({
     baseURL: `${API_URL}/api/auth`,
     headers: {

@@ -1,0 +1,38 @@
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(2, 20, 15, 0.8); /* Semi-transparent brand green */
+  backdrop-filter: blur(5px); /* Blurs the background content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensures it is above everything else */
+}
+
+.spinner-container {
+  text-align: center;
+  color: #22C55E; /* Your accent green */
+}
+
+.main-spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(34, 197, 94, 0.2);
+  border-top: 5px solid #22C55E;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-container p {
+  font-weight: 500;
+  letter-spacing: 1px;
+}

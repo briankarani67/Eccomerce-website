@@ -1,5 +1,4 @@
 import React from 'react'
-import Footer from '../../components/Footer'
 
 function Contact() {
   return (
@@ -9,7 +8,6 @@ function Contact() {
         <ul>
             <li>Email: <a href="mailto:briankarani884@gmail.com">Brian Karani</a></li>
         </ul>
-        <Footer/>
     </div>
   )
 }
