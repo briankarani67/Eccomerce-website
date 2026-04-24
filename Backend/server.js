@@ -9,7 +9,14 @@ const authRoutes = require('./routes/authRoutes');
 const app = express();
 
 // Middlewares
-app.use(cors());
+const allowedOrigin ='https://eccomerce-website-1-kxit.onrender.com'; 
+
+app.use(cors({
+  origin: allowedOrigin,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 app.use(express.json()); // Essential to parse JSON in req.body
 
 // Mount Routes
