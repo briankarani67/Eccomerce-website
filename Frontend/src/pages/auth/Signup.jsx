@@ -1,29 +1,41 @@
 import React, { useState } from 'react';
 import './Signup.css'; // Import the styling
 import { signupUser } from '../../api/authApi'; // Import the API call function
+import { Link, useNavigate } from 'react-router-dom';
+import LoadingOverlay from './LoadingOverlay';
+
 
 const Signup = () => {
     const [formData, setFormData] = useState({ username: '', email: '', password: '' });
     const [message, setMessage] = useState('');
-    const [isSuccess, setIsSuccess] = useState(false); // New state
+    const navigate = useNavigate(); 
+    const [loading, setLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSuccess(false);
+        setLoading(true); 
         try {
             const response = await signupUser(formData);
             setMessage(response.data.message);
             setIsSuccess(true); // Set success state to true
             // Optionally redirect to login page here
+            setTimeout(() => {
+                 navigate('/login');
+             }, 2000);
         } catch (error) {
-            // This is where your specific backend errors (e.g., "Email taken") show up
             setMessage(error.response?.data?.message || "Something went wrong");
-            setIsSuccess(false); // Set success state to false
+            setIsSuccess(false); 
+        }
+        finally {
+            setLoading(false); 
         }
     };
 
     return (
         <div className="auth-wrapper">
+             {loading && <LoadingOverlay />}
             <div className="auth-card">
                 <h2>Create Account</h2>
                 <p>Join our community today</p>
@@ -53,7 +65,9 @@ const Signup = () => {
                         />
                     </div>
 
-                    <button type="submit" className="auth-btn">Sign Up</button>
+                    <button type="submit" className="auth-btn" disabled={loading}>
+                        {loading ? 'Signing Up...' : 'Sign Up'}
+                    </button>
                 </form>
                 
                 {message && (
@@ -63,7 +77,7 @@ const Signup = () => {
         )}
                 
                 <p className="auth-footer">
-                    Already have an account? <a href="/login">Login here</a>
+                    Already have an account? <Link to="/login">Login here</Link>
                 </p>
             </div>
         </div>
