@@ -1,0 +1,80 @@
+/* White Theme Wrapper */
+.auth-wrapper-white {
+    background-color: #064420; /* Light professional grey */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* White Card Style */
+.auth-card-white {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    border: 1px solid #e1e8e7;
+}
+
+.auth-card-white h2 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.auth-card-white p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+/* Input Styling for White Background */
+.input-group label {
+    color: #064420; /* Your Brand Green */
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.input-group input {
+    background: #fff;
+    border: 1px solid #ced4da;
+    color: #333;
+}
+
+.input-group input:focus {
+    border-color: #258f0f;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(37, 143, 15, 0.1);
+}
+
+/* Footer Link */
+.auth-footer-white {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.back-link-dark {
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.back-link-dark:hover {
+    color: #258f0f;
+}
+
+/* Responsive adjust for mobile */
+@media (max-width: 480px) {
+    .auth-card-white {
+        padding: 30px 20px;
+        box-shadow: none;
+        background: transparent;
+        border: none;
+    }
+}

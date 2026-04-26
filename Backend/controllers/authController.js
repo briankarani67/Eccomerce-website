@@ -65,7 +65,7 @@ exports.login = async (req, res) => {
     // 2. Verify password
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "The email you have entered doesn't match with that password" });
     }
 
     // 3. Generate token using your new utility

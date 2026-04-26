@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-// Create an axios instance (Best practice)
+// Create an axios instance 
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const API = axios.create({
