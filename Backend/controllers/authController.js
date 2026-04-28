@@ -4,7 +4,7 @@ const { comparePassword } = require('../utils/hashPassword');
 const { generateToken } = require('../utils/generateToken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcryptjs');
+
 
 
 exports.signup = async (req, res) => {
@@ -95,43 +95,73 @@ exports.login = async (req, res) => {
 
 
 exports.forgotPassword = async (req, res) => {
-  const { email } = req.body;
+    const { email } = req.body;
+    console.log("--- Forgot Password Process Started for:", email);
 
-  try {
-    const [user] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
-    if (user.length === 0) return res.status(404).json({ message: "Email not found" });
+    try {
+        // 1. Check if user exists
+        const [users] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+        
+        if (users.length === 0) {
+            return res.status(404).json({ message: "That email is not registered." });
+        }
 
-    // Create a random token
-    const token = crypto.randomBytes(32).toString('hex');
-    const expiry = new Date(Date.now() + 3600000); // 1 hour from now
+        const user = users[0];
 
-    // Save to database
-    await db.query(
-      'UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?',
-      [token, expiry, email]
-    );
+        // 2. Generate a secure 32-byte token
+        const token = crypto.randomBytes(32).toString('hex');
+        const expiry = new Date(Date.now() + 3600000); // Expires in 1 hour
 
-    // Setup Email (Nodemailer)
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER, 
-        pass: process.env.EMAIL_PASS  // Use an "App Password," not your login password
-      }
-    });
+        // 3. Save token to DB (Use 'id' or 'user_id' based on your workbench)
+        // Note: Change 'id' to 'user_id' below if that's your column name
+        await db.execute(
+            'UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?',
+            [token, expiry, email]
+        );
 
-    const resetUrl = `https://eccomerce-website-77zg.onrender.com/reset-password/${token}`;
+        // 4. Configure Nodemailer
+        const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 5000,   // 5 seconds
+    socketTimeout: 15000     // 15 seconds
+});
 
-    await transporter.sendMail({
-      to: email,
-      subject: "Password Reset Request",
-      html: `<p>Click <a href="${resetUrl}">here</a> to reset your password. Link expires in 1 hour.</p>`
-    });
+        // 5. Define the reset link (Switch to localhost:3000 if testing locally)
+        const resetUrl = `https://eccomerce-website-77zg.onrender.com/reset-password/${token}`;
 
-    res.json({ message: "Reset link sent to your email" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+        // 6. Send the Mail
+        const mailOptions = {
+            from: `"Braines Support" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: "Password Reset Request",
+            html: `
+                <div style="font-family: sans-serif; border: 1px solid #e2e2e2; padding: 20px; border-radius: 10px;">
+                    <h2 style="color: #064420;">Password Reset</h2>
+                    <p>You requested to reset your password for your Braines account.</p>
+                    <p>Click the button below to set a new password. This link is valid for 1 hour.</p>
+                    <a href="${resetUrl}" style="background-color: #064420; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a>
+                    <p style="margin-top: 20px; font-size: 12px; color: #666;">If you didn't request this, you can safely ignore this email.</p>
+                </div>
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+        
+        console.log(`✅ Reset email sent to: ${email}`);
+        res.status(200).json({ message: "Reset link sent to your email!" });
+
+    } catch (error) {
+        console.error("❌ FORGOT PASSWORD ERROR:", error);
+        res.status(500).json({ message: "Error sending email. Please check server logs." });
+    }
 };
 
 
