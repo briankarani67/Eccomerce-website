@@ -48,7 +48,7 @@ The goal of Braines is to empower individuals—especially students and beginner
 * Web Design & Development
 * Freelancing
 * Other Online Gigs
-
+mainly network marketing
 
 ### 🛠️ Admin Features
 
