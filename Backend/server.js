@@ -4,7 +4,8 @@ const cors = require('cors');
 
 // Import your route files
 const authRoutes = require('./routes/authRoutes');
-const auth = require('./routes/auth');
+const profileRoutes = require('./routes/profileRoutes');
+// const auth = require('./routes/auth');
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(express.json()); // Essential to parse JSON in req.body
 // Mount Routes
 // This prefix means all auth routes start with /api/auth
 app.use('/api/auth', authRoutes);
+app.use('/api/profiles', profileRoutes);
 
 // Simple Health Check
 app.get('/', (req, res) => {

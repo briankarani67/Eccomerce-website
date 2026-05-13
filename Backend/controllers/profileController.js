@@ -1,15 +1,7 @@
+const db = require('../config/db');
 
-const express = require('express');
-const router = express.Router();
-const db = require('../config/db')
-// Import the entire controller object so you can access all functions
-const authController = require('../controllers/authController');
-
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
-router.post('/forgot-password', authController.forgotPassword);
-router.post('/reset-password/:token', authController.resetPassword);
-router.get('/profile/:id', async (req, res) => {
+// Fetch profile with a JOIN to get email from users table
+exports.getProfile = async (req, res) => {
     const userId = req.params.id;
     try {
         const [user] = await db.execute(
@@ -19,14 +11,16 @@ router.get('/profile/:id', async (req, res) => {
              WHERE p.user_id = ?`, 
             [userId]
         );
+        
         if (user.length === 0) return res.status(404).json({ message: "Profile not found" });
         res.status(200).json(user[0]);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
-});
+};
 
-router.post('/create-profile', async (req, res) => {
+// Create a new profile entry
+exports.createProfile = async (req, res) => {
     const { user_id, first_name, last_name, phone, country } = req.body;
     try {
         await db.execute(
@@ -38,6 +32,25 @@ router.post('/create-profile', async (req, res) => {
         console.error("Profile Creation Error:", err);
         res.status(500).json({ message: "Error saving profile details" });
     }
-});
+};
 
-module.exports = router;
+// Update existing profile details
+exports.updateProfile = async (req, res) => {
+    const userId = req.params.id;
+    const { first_name, last_name, phone, country } = req.body;
+    try {
+        const [result] = await db.execute(
+            `UPDATE user_profiles 
+             SET first_name = ?, last_name = ?, phone = ?, country = ? 
+             WHERE user_id = ?`,
+            [first_name, last_name, phone, country, userId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Profile not found" });
+        }
+        res.status(200).json({ message: "Profile updated successfully!" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
