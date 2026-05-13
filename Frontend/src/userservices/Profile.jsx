@@ -10,29 +10,65 @@ const Profile = () => {
         phone: '',
         country: 'Kenya'
     });
+    
+    // State to toggle editing mode
+    const [isEditing, setIsEditing] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
     useEffect(() => {
         const fetchProfile = async () => {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             try {
-                // Adjust the URL to your backend port
-                const res = await axios.get(`${API_URL}/api/auth/profile/${storedUser.id}`);
+                // Pointing to your NEW profiles route
+                const res = await axios.get(`${API_URL}/api/profiles/${storedUser.id}`);
                 setFormData(res.data);
             } catch (err) {
-                console.error("Error fetching profile from database", err);
+                console.error("Error fetching profile", err);
             }
         };
         fetchProfile();
-    }, []);
+    }, [API_URL]);
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleUpdate = async () => {
+        if (!isEditing) {
+            setIsEditing(true); 
+            return;
+        }
+
+        setLoading(true);
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+
+        try {
+            await axios.put(`${API_URL}/api/profiles/update/${storedUser.id}`, {
+                first_name: formData.first_name,
+                last_name: formData.last_name,
+                phone: formData.phone,
+                country: formData.country
+            });
+            
+            alert("Profile updated successfully!");
+            setIsEditing(false); // Switch back to read-only
+        } catch (err) {
+            console.error("Update error", err);
+            alert("Failed to update profile");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="profile-wrapper">
             <div className="profile-grid">
-                {/* Left Card: Personal Details */}
                 <div className="profile-card main-info">
                     <div className="user-profile-header">
                         <div className="profile-avatar">
-                            {formData.first_name.charAt(0)}{formData.last_name.charAt(0)}
+                            {formData.first_name?.charAt(0)}{formData.last_name?.charAt(0)}
                         </div>
                         <div className="user-meta">
                             <h2>{formData.first_name} {formData.last_name}</h2>
@@ -44,49 +80,93 @@ const Profile = () => {
                         <div className="form-row">
                             <div className="field">
                                 <label>First Name*</label>
-                                <input type="text" value={formData.first_name} readOnly />
+                                <input 
+                                    name="first_name"
+                                    type="text" 
+                                    value={formData.first_name} 
+                                    onChange={handleChange}
+                                    readOnly={!isEditing} 
+                                    className={isEditing ? "editable" : ""}
+                                />
                             </div>
                             <div className="field">
                                 <label>Last Name*</label>
-                                <input type="text" value={formData.last_name} readOnly />
+                                <input 
+                                    name="last_name"
+                                    type="text" 
+                                    value={formData.last_name} 
+                                    onChange={handleChange}
+                                    readOnly={!isEditing}
+                                    className={isEditing ? "editable" : ""}
+                                />
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="field">
                                 <label>Country</label>
-                                <select value={formData.country} disabled>
+                                <select 
+                                    name="country"
+                                    value={formData.country} 
+                                    onChange={handleChange}
+                                    disabled={!isEditing}
+                                >
                                     <option value="Kenya">Kenya</option>
+                                    <option value="Uganda">Uganda</option>
+                                    <option value="Tanzania">Tanzania</option>
                                 </select>
                             </div>
                             <div className="field">
                                 <label>Phone* No zero (722...)</label>
                                 <div className="phone-box">
                                     <span className="prefix">254</span>
-                                    <input type="text" value={formData.phone} readOnly />
+                                    <input 
+                                        name="phone"
+                                        type="text" 
+                                        value={formData.phone} 
+                                        onChange={handleChange}
+                                        readOnly={!isEditing}
+                                        className={isEditing ? "editable" : ""}
+                                    />
                                 </div>
                             </div>
                         </div>
-                        <button type="button" className="update-btn">Update Profile</button>
+                        
+                        <button 
+                            type="button" 
+                            className={`update-btn ${isEditing ? "save-mode" : ""}`}
+                            onClick={handleUpdate}
+                            disabled={loading}
+                        >
+                            {loading ? "Saving..." : isEditing ? "Save Changes" : "Update Profile"}
+                        </button>
+
+                        {isEditing && (
+                            <button 
+                                type="button" 
+                                className="cancel-btn" 
+                                onClick={() => setIsEditing(false)}
+                            >
+                                Cancel
+                            </button>
+                        )}
                     </form>
                 </div>
-
-                {/* Right Card: Security */}
                 <div className="profile-card security-info">
-                    <h3>Change Password</h3>
-                    <div className="field">
-                        <label>Current Password*</label>
-                        <input type="password" placeholder="Enter Current Password" />
-                    </div>
-                    <div className="field">
-                        <label>New Password*</label>
-                        <input type="password" placeholder="Enter New Password" />
-                    </div>
-                    <div className="field">
-                        <label>Confirm Password*</label>
-                        <input type="password" placeholder="Confirm New Password" />
-                    </div>
-                    <button type="button" className="change-btn">Change Password</button>
-                </div>
+                     <h3>Change Password</h3>
+                     <div className="field">
+                         <label>Current Password*</label>
+                         <input type="password" placeholder="Enter Current Password" />
+                     </div>
+                     <div className="field">
+                         <label>New Password*</label>
+                         <input type="password" placeholder="Enter New Password" />
+                     </div>
+                     <div className="field">
+                         <label>Confirm Password*</label>
+                         <input type="password" placeholder="Confirm New Password" />
+                     </div>
+                     <button type="button" className="change-btn">Change Password</button>
+                 </div>
             </div>
         </div>
     );
