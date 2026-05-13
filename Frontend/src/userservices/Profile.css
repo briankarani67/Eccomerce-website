@@ -31,7 +31,7 @@
 .profile-avatar {
     width: 90px;
     height: 90px;
-    background: goldenrod;
+    background: #4ADE80;
     color: #064420;
     border-radius: 50%;
     display: flex;
@@ -63,7 +63,7 @@
 
 .field label {
     font-size: 0.85rem;
-    color: goldenrod;
+    color: #4ADE80;
     font-weight: 500;
 }
 
@@ -92,7 +92,7 @@
 .update-btn, .change-btn {
     width: 100%;
     padding: 16px;
-    background: goldenrod;
+    background: #BBF7D0;
     color: #064420;
     border: none;
     border-radius: 12px;
@@ -104,7 +104,7 @@
 }
 
 .update-btn:hover, .change-btn:hover {
-    background: #e5a50a; /* Slightly darker goldenrod */
+    background: #BBF7D0; /* Slightly darker goldenrod */
     transform: translateY(-2px);
 }
 
