@@ -72,13 +72,20 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "The email you have entered doesn't match with that password" });
     }
 
-    // 3. Generate token using your new utility
+    // 3. NEW: Check if the user has a profile in the user_profiles table
+    const [profiles] = await db.execute(
+      'SELECT profile_id FROM user_profiles WHERE user_id = ?', 
+      [user.user_id]
+    );
+
+    // 4. Generate token using your new utility
     const token = generateToken(user);
 
-    // 4. Send response
+    // 5. Send response (Including hasProfile flag for your frontend redirect logic)
     res.status(200).json({
       message: "Login successful",
       token,
+      hasProfile: profiles.length > 0, // Returns true if a profile exists, false otherwise
       user: {
         id: user.user_id,
         username: user.username,

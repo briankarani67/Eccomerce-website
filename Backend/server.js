@@ -4,6 +4,7 @@ const cors = require('cors');
 
 // Import your route files
 const authRoutes = require('./routes/authRoutes');
+const auth = require('./routes/auth');
 
 const app = express();
 
