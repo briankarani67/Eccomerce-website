@@ -1,0 +1,154 @@
+/* CompleteProfile.css */
+
+.setup-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Using your solid brand green as the primary background */
+    background-color: #064420; 
+    padding: 10px;
+    font-family: 'Inter', sans-serif;
+}
+
+.setup-card {
+    background: #ffffff;
+    padding: 50px 40px 40px 40px;
+    position: relative;
+    border-radius: 20px;
+    /* Stronger shadow since the background is now a solid dark green */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); 
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7); /* Soft white to match the glass look */
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+    background-color: rgba(128, 5, 5, 0.1);
+    transform: rotate(90deg); /* Smooth rotation effect on hover */
+}
+
+/* Ensure the button doesn't look like the main action button */
+.close-btn:focus {
+    outline: none;
+}
+
+.setup-card h2 {
+    color: #166534; /* Deep Forest Green for heading */
+    margin-bottom: 10px;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.setup-card p {
+    color: #4b5563;
+    margin-bottom: 30px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 22px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #22c55e; /* Focus matches the background */
+    background-color: #f0fdf4;
+}
+
+/* Kenyan Phone Prefix Styling */
+.phone-box {
+    display: flex;
+    align-items: center;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.phone-box span {
+    padding: 0 15px;
+    color: #166534;
+    font-weight: 700;
+    font-size: 14px;
+    background-color: #f0fdf4;
+    border-right: 2px solid #e5e7eb;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.phone-box input {
+    border: none !important;
+    border-radius: 0;
+    height: 50px;
+}
+
+/* Action Button */
+.setup-card button {
+    width: 100%;
+    padding: 16px;
+    background-color: #166534; /* Darker green for the button so it pops against white */
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.setup-card button:hover {
+    background-color: #064e3b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.setup-card button:active {
+    transform: scale(0.98);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

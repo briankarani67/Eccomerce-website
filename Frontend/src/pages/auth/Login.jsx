@@ -15,7 +15,7 @@ const Login = () => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
@@ -23,12 +23,20 @@ const Login = () => {
         try {
             const response = await loginUser(credentials);
             
-            // Store the token and user info
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            // 1. Destructure the new hasProfile flag from your backend response
+            const { token, user, hasProfile } = response.data;
 
-            // Redirect to home or dashboard
-            navigate('/dashboard');
+            // 2. Store the token and user info
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+
+            // 3. Logic: If profile doesn't exist, go to setup. Otherwise, go to dashboard.
+            if (hasProfile === false) {
+                navigate('/completeProfile'); 
+            } else {
+                navigate('/dashboard');
+            }
+            
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid email or password');
         } finally {

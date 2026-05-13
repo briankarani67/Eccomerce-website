@@ -11,6 +11,7 @@ import './App.css'
 import Signup from './pages/auth/Signup';
 import Login from './pages/auth/Login';
 import Forgotpassword from './pages/auth/Forgotpassword';
+import CompleteProfile from './pages/auth/completeProfile';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <Route path="/signup/*" element={<Signup />} />
       <Route path="/login/*" element={<Login/>} />
       <Route path= "/forgotpassword" element={<Forgotpassword/>}/>
+      <Route path="/completeProfile" element={<CompleteProfile/>}/>
     </Routes>
     </div>
   );
