@@ -7,13 +7,22 @@ const ForgotPassword = () => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        // Your API call here
+    // Replace your existing handleSubmit with this:
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
+    
+    try {
+        // Ensure this URL matches your backend route
+        const response = await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
+        setMessage(response.data.message);
+    } catch (err) {
+        setMessage(err.response?.data?.message || 'Something went wrong. Try again.');
+    } finally {
         setLoading(false);
-        setMessage('Check your email for the reset link.');
-    };
+    }
+};
 
     return (
         <div className="auth-wrapper-white">
