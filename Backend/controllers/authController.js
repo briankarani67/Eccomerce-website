@@ -4,6 +4,7 @@ const { comparePassword } = require('../utils/hashPassword');
 const { generateToken } = require('../utils/generateToken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
 
 
 
@@ -162,11 +163,11 @@ exports.forgotPassword = async (req, res) => {
 
         await transporter.sendMail(mailOptions);
         
-        console.log(`✅ Reset email sent to: ${email}`);
+        console.log(` Reset email sent to: ${email}`);
         res.status(200).json({ message: "Reset link sent to your email!" });
 
     } catch (error) {
-        console.error("❌ FORGOT PASSWORD ERROR:", error);
+        console.error("FORGOT PASSWORD ERROR:", error);
         res.status(500).json({ message: "Error sending email. Please check server logs." });
     }
 };
@@ -189,7 +190,7 @@ exports.resetPassword = async (req, res) => {
 
     // Update password and clear token
     await db.query(
-      'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE id = ?',
+      'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE user_id = ?',
       [hashedPassword, user[0].id]
     );
 
