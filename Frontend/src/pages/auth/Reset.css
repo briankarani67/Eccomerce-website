@@ -1,0 +1,124 @@
+/* ResetPassword.css */
+
+.setup-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Using your brand primary green */
+    background-color: #22c55e; 
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.setup-card {
+    background: rgba(22, 101, 52, 0.2); 
+    padding: 40px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.setup-card h2 {
+    color: #ffffff;
+    margin-bottom: 12px;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.setup-card p {
+    color: #f0fdf4;
+    margin-bottom: 30px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    /* Using the Lime Green you liked for consistency */
+    color: #4ADE80; 
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #166534;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: #ffffff;
+    border-color: #166534;
+}
+
+/* Using your Dark Forest Green for the primary action button */
+.reset-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #166534; 
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.reset-btn:hover {
+    background-color: #064e3b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.reset-btn:disabled {
+    background-color: #064e3b;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.status-message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.status-message.success {
+    background-color: rgba(74, 222, 128, 0.2);
+    color: #4ADE80;
+}
+
+.status-message.error {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

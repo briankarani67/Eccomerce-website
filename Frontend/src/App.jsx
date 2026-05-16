@@ -12,6 +12,7 @@ import Signup from './pages/auth/Signup';
 import Login from './pages/auth/Login';
 import Forgotpassword from './pages/auth/Forgotpassword';
 import CompleteProfile from './pages/auth/completeProfile';
+import ResetPassword from './pages/auth/ResetPassword';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <Route path="/login/*" element={<Login/>} />
       <Route path= "/forgotpassword" element={<Forgotpassword/>}/>
       <Route path="/completeProfile" element={<CompleteProfile/>}/>
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
     </Routes>
     </div>
   );

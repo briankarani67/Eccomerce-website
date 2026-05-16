@@ -173,29 +173,37 @@ exports.forgotPassword = async (req, res) => {
 };
 
 
+
+
 exports.resetPassword = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
+    const { token } = req.params;
+    const { password } = req.body;
 
-  try {
-    // Find user with valid token that hasn't expired
-    const [user] = await db.query(
-      'SELECT * FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()',
-      [token]
-    );
+    try {
+        // 1. Check if token is valid and NOT expired
+        const [users] = await db.execute(
+            'SELECT * FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()',
+            [token]
+        );
 
-    if (user.length === 0) return res.status(400).json({ message: "Invalid or expired token" });
+        if (users.length === 0) {
+            return res.status(400).json({ message: "Invalid or expired token" });
+        }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+        const user = users[0];
 
-    // Update password and clear token
-    await db.query(
-      'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE user_id = ?',
-      [hashedPassword, user[0].id]
-    );
+        // 2. Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    res.json({ message: "Password updated successfully!" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+        // 3. Update the user record - Use 'user_id' to match your Workbench
+        await db.execute(
+            'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE user_id = ?',
+            [hashedPassword, user.user_id]
+        );
+
+        res.status(200).json({ message: "Password updated successfully! You can now login." });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
 };
