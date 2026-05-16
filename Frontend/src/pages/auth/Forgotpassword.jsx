@@ -1,29 +1,35 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Forgot.css'; 
+import axios from 'axios';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
-    // Replace your existing handleSubmit with this:
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    
+
     try {
-        // Ensure this URL matches your backend route
+        // Log to console to see if this even triggers
+        console.log("Attempting to send reset link to:", email);
+
         const response = await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
         setMessage(response.data.message);
     } catch (err) {
-        setMessage(err.response?.data?.message || 'Something went wrong. Try again.');
+        // Detailed error logging
+        console.error("Full Error Object:", err);
+        setError(err.response?.data?.message || 'Server is unreachable. Check your backend.');
     } finally {
         setLoading(false);
     }
 };
-
     return (
         <div className="auth-wrapper-white">
             <div className="auth-card-white">
