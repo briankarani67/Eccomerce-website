@@ -52,6 +52,8 @@ app.use(express.json()); // Essential to parse JSON in req.body
 app.use('/api/auth', authRoutes);
 app.use('/api/profiles', profileRoutes);
 
+
+
 // Simple Health Check
 app.get('/', (req, res) => {
     res.send('Server is running perfectly.');
