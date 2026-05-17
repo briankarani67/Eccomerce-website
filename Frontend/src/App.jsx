@@ -13,6 +13,7 @@ import Login from './pages/auth/Login';
 import Forgotpassword from './pages/auth/Forgotpassword';
 import CompleteProfile from './pages/auth/completeProfile';
 import ResetPassword from './pages/auth/ResetPassword';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
       <Route path= "/forgotpassword" element={<Forgotpassword/>}/>
       <Route path="/completeProfile" element={<CompleteProfile/>}/>
       <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/admin/*" element={<AdminDashboard />} />
     </Routes>
     </div>
   );

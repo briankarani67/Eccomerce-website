@@ -207,3 +207,28 @@ exports.resetPassword = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+
+exports.getAllMembers = async (req, res) => {
+    try {
+        const [members] = await db.execute(`
+            SELECT 
+                u.user_id, 
+                p.first_name, 
+                p.last_name, 
+                u.email, 
+                p.phone, 
+                p.country, 
+                u.role, 
+                u.created_at 
+            FROM users u
+            LEFT JOIN user_profiles p ON u.user_id = p.user_id
+            ORDER BY u.created_at DESC
+        `);
+        
+        res.status(200).json(members);
+    } catch (error) {
+        console.error("Fetch Members Error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
