@@ -45,33 +45,7 @@ app.use(cors({
   credentials: true
 }));
 
-const path = require('path');
-const fs = require('fs');
 
-// 1. Define the path (Adjust this if your folder is named 'client' or 'build')
-const frontendPath = path.resolve(__dirname, './Frontend/dist');
-
-// 2. DEBUG: This will print to your Render logs so you can see if the path is real
-if (fs.existsSync(frontendPath)) {
-    console.log("✅ Frontend dist folder found at:", frontendPath);
-} else {
-    console.log("❌ ERROR: Frontend dist folder NOT found at:", frontendPath);
-    console.log("Current Directory (__dirname):", __dirname);
-}
-
-// 3. Serve Static Files
-app.use(express.static(frontendPath));
-
-// 4. The Catch-All
-app.get('*', (req, res) => {
-    const indexPath = path.join(frontendPath, 'index.html');
-    
-    if (fs.existsSync(indexPath)) {
-        res.sendFile(indexPath);
-    } else {
-        res.status(404).send(`Frontend not built. Looking for index.html at: ${indexPath}`);
-    }
-});
 
 app.use(express.json()); // Essential to parse JSON in req.body
 
