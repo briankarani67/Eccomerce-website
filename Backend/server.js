@@ -53,7 +53,33 @@ app.use(express.json()); // Essential to parse JSON in req.body
 // This prefix means all auth routes start with /api/auth
 app.use('/api/auth', authRoutes);
 app.use('/api/profiles', profileRoutes);
+const path = require('path');
+const fs = require('fs');
 
+// --- FRONTEND SERVING (The "Catch-All") ---
+// Corrected to '../Frontend/dist' to match your exact directory casing
+const frontendBuildPath = path.resolve(__dirname, '../Frontend/dist');
+
+if (fs.existsSync(frontendBuildPath)) {
+    console.log("✅ Frontend production build found at:", frontendBuildPath);
+    
+    // Serve static files (CSS, JS, Images) from the built folder
+    app.use(express.static(frontendBuildPath));
+
+    // Redirect any direct URL entry (like the email reset link) back to React
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(frontendBuildPath, 'index.html'));
+    });
+} else {
+    // If you haven't built the frontend yet, this safety block stops the crash!
+    console.warn("⚠️ Warning: Frontend production build folder was not found at:", frontendBuildPath);
+    console.log("👉 Run 'npm run build' inside your Frontend folder to generate it.");
+    
+    // Fallback route so your backend API continues running smoothly
+    app.get('/', (req, res) => {
+        res.send('Backend API is live, but production Frontend build is missing.');
+    });
+}
 
 
 // Simple Health Check

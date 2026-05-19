@@ -6,18 +6,14 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 
-
-
 exports.signup = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    // 1. Validation check
     if (!username || !email || !password) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    // 2. Check Username separately
     const [userCheck] = await db.execute(
       'SELECT username FROM users WHERE username = ?', 
       [username]
@@ -26,7 +22,6 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: "That username is already taken." });
     }
 
-    // 3. Check Email separately
     const [emailCheck] = await db.execute(
       'SELECT email FROM users WHERE email = ?', 
       [email]
@@ -35,10 +30,8 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: "That email is already registered." });
     }
 
-    // 4. If both are clear, Hash the password
     const hashedPassword = await hashPassword(password);
 
-    // 5. Insert the new user
     await db.execute(
       'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
       [username, email, hashedPassword]
@@ -52,13 +45,10 @@ exports.signup = async (req, res) => {
   }
 };
 
-
-
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // 1. Find user
     const [users] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
     
     if (users.length === 0) {
@@ -67,26 +57,22 @@ exports.login = async (req, res) => {
 
     const user = users[0];
 
-    // 2. Verify password
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "The email you have entered doesn't match with that password" });
     }
 
-    // 3. NEW: Check if the user has a profile in the user_profiles table
     const [profiles] = await db.execute(
       'SELECT profile_id FROM user_profiles WHERE user_id = ?', 
       [user.user_id]
     );
 
-    // 4. Generate token using your new utility
     const token = generateToken(user);
 
-    // 5. Send response (Including hasProfile flag for your frontend redirect logic)
     res.status(200).json({
       message: "Login successful",
       token,
-      hasProfile: profiles.length > 0, // Returns true if a profile exists, false otherwise
+      hasProfile: profiles.length > 0, 
       user: {
         id: user.user_id,
         username: user.username,
@@ -100,14 +86,10 @@ exports.login = async (req, res) => {
   }
 };
 
-
-
 exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
-    console.log("--- Forgot Password Process Started for:", email);
 
     try {
-        // 1. Check if user exists
         const [users] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
         
         if (users.length === 0) {
@@ -116,36 +98,30 @@ exports.forgotPassword = async (req, res) => {
 
         const user = users[0];
 
-        // 2. Generate a secure 32-byte token
         const token = crypto.randomBytes(32).toString('hex');
-        const expiry = new Date(Date.now() + 3600000); // Expires in 1 hour
+        const expiry = new Date(Date.now() + 3600000); 
 
-        // 3. Save token to DB (Use 'id' or 'user_id' based on your workbench)
-        // Note: Change 'id' to 'user_id' below if that's your column name
         await db.execute(
             'UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?',
             [token, expiry, email]
         );
 
-        // 4. Configure Nodemailer
         const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    connectionTimeout: 10000, // 10 seconds
-    greetingTimeout: 5000,   // 5 seconds
-    socketTimeout: 15000     // 15 seconds
-});
+            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            },
+            connectionTimeout: 10000, 
+            greetingTimeout: 5000,   
+            socketTimeout: 15000    
+        });
 
-        // 5. Define the reset link (Switch to localhost:3000 if testing locally)
         const resetUrl = `https://eccomerce-website-77zg.onrender.com/reset-password/${token}`;
 
-        // 6. Send the Mail
         const mailOptions = {
             from: `"Braines Support" <${process.env.EMAIL_USER}>`,
             to: email,
@@ -163,7 +139,6 @@ exports.forgotPassword = async (req, res) => {
 
         await transporter.sendMail(mailOptions);
         
-        console.log(` Reset email sent to: ${email}`);
         res.status(200).json({ message: "Reset link sent to your email!" });
 
     } catch (error) {
@@ -172,15 +147,11 @@ exports.forgotPassword = async (req, res) => {
     }
 };
 
-
-
-
 exports.resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
 
     try {
-        // 1. Check if token is valid and NOT expired
         const [users] = await db.execute(
             'SELECT * FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()',
             [token]
@@ -192,10 +163,8 @@ exports.resetPassword = async (req, res) => {
 
         const user = users[0];
 
-        // 2. Hash the new password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // 3. Update the user record - Use 'user_id' to match your Workbench
         await db.execute(
             'UPDATE users SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE user_id = ?',
             [hashedPassword, user.user_id]
@@ -208,8 +177,11 @@ exports.resetPassword = async (req, res) => {
     }
 };
 
-
 exports.getAllMembers = async (req, res) => {
+    if (!req.user || req.user.role !== 'admin') {
+        return res.status(403).json({ message: "Access denied. Admins only." });
+    }
+
     try {
         const [members] = await db.execute(`
             SELECT 
