@@ -4,6 +4,7 @@ const router = express.Router();
 const db = require('../config/db')
 // Import the entire controller object so you can access all functions
 const authController = require('../controllers/authController');
+const { verifyToken } = require('../middleware/authMiddleware');
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
@@ -25,6 +26,7 @@ router.get('/profile/:id', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+router.get('/members', verifyToken, authController.getAllMembers);
 
 router.post('/create-profile', async (req, res) => {
     const { user_id, first_name, last_name, phone, country } = req.body;
