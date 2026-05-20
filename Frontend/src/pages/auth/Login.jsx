@@ -33,7 +33,11 @@ const Login = () => {
             // 3. Logic: If profile doesn't exist, go to setup. Otherwise, go to dashboard.
             if (hasProfile === false) {
                 navigate('/completeProfile'); 
-            } else {
+            }
+            else if (user.role === 'admin') {
+                navigate('/admin');
+            }
+            else {
                 navigate('/dashboard');
             }
             
