@@ -1,25 +1,51 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Admin.css';
 
 const AdminMembers = () => {
     const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
     useEffect(() => {
+        // 1. Client-side protection: Read stored session info
+        const token = localStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
+
+        if (!token || !storedUser) {
+            navigate('/login');
+            return;
+        }
+
+        const user = JSON.parse(storedUser);
+        if (user.role !== 'admin') {
+            navigate('/profile'); 
+            return;
+        }
+
+        // 2. Verified Admin: Request member list from server with Authorization header
         const fetchMembers = async () => {
             try {
-                const response = await axios.get(`${API_URL}/api/auth/members`);
+                const response = await axios.get(`${API_URL}/api/auth/members`, {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Sends the validation token to the server
+                    }
+                });
                 setMembers(response.data);
             } catch (err) {
                 console.error("Error fetching members", err);
+                if (err.response?.status === 401 || err.response?.status === 403) {
+                    navigate('/profile'); // Kick out if the token fails server validation
+                }
             } finally {
                 setLoading(false);
             }
         };
+
         fetchMembers();
-    }, []);
+    }, [navigate, API_URL]);
 
     return (
         <div className="admin-wrapper">
