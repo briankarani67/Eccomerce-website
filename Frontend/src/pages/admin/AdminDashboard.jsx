@@ -17,25 +17,26 @@ const AdminMembers = () => {
     const [greeting, setGreeting] = useState("");
     
     useEffect(() => {
-            setGreeting(getGreeting());
-    
-            // Retrieving the name you registered in the database
-            const storedUser = JSON.parse(localStorage.getItem('user'));
-            if (storedUser && storedUser.username) {
-                setUsername(storedUser.username);
-            }
-        }, []);
+        // 1. Set Workspace Greetings Layout
+        setGreeting(getGreeting());
 
-    useEffect(() => {
+        // 2. Combined Security & Profile Fetching Wall
         const token = localStorage.getItem('token');
-        const storedUser = localStorage.getItem('user');
+        const storedUserString = localStorage.getItem('user');
 
-        if (!token || !storedUser) {
+        if (!token || !storedUserString) {
             navigate('/login');
             return;
         }
 
-        const user = JSON.parse(storedUser);
+        const user = JSON.parse(storedUserString);
+        
+        // Safety check to set username safely
+        if (user && user.username) {
+            setUsername(user.username);
+        }
+
+        // Redirect ordinary users instantly
         if (user.role !== 'admin') {
             navigate('/profile');
             return;
@@ -87,7 +88,6 @@ const AdminMembers = () => {
         setFilteredMembers(results);
     }, [searchTerm, statusFilter, members]);
 
-    // Calculate Platform Statistics
     const totalMembers = members.length;
     const completedProfiles = members.filter(m => m.first_name).length;
     const pendingProfiles = totalMembers - completedProfiles;
@@ -96,16 +96,15 @@ const AdminMembers = () => {
         <div className="admin-wrapper">
             <div className="admin-container">
                 <header className="home-header">
-                <div className="text-group">
-                    <h1>{greeting}, <span className="name-accent">{username}</span></h1>
-                    <p>Welcome to your Braines workspace.</p>
-                </div>
-                <div className="date-display">
-                    {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-                </div>
-            </header>
+                    <div className="text-group">
+                        <h1>{greeting}, <span className="name-accent">{username}</span></h1>
+                        <p>Welcome the Admin.</p>
+                    </div>
+                    <div className="date-display">
+                        {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    </div>
+                </header>
                 
-              
                 <div className="stats-grid">
                     <div className="stats-card">
                         <h3>Total Members</h3>
@@ -128,7 +127,6 @@ const AdminMembers = () => {
                             <p>Viewing all registered users and their profile status</p>
                         </div>
                         
-                        {/* 2. Search and Filter Inputs */}
                         <div className="controls-group">
                             <input 
                                 type="text" 
@@ -149,7 +147,6 @@ const AdminMembers = () => {
                         </div>
                     </div>
 
-                    {/* Table View Component */}
                     <div className="table-container">
                         {loading ? (
                             <div className="loader">Loading Members...</div>
@@ -168,19 +165,19 @@ const AdminMembers = () => {
                                 </thead>
                                 <tbody>
                                     {filteredMembers.map((member) => (
-                                       <tr key={member.user_id}>
-                                       <td className="name-cell">
-                                           {member.first_name ? `${member.first_name} ${member.last_name}` : <span className="pending">Profile Pending</span>}
-                                       </td>
-                                       <td>{member.email}</td>
-                                       <td>{member.phone || '—'}</td>
-                                       <td>{member.country || '—'}</td>
-                                       <td>{new Date(member.created_at).toLocaleDateString('en-GB')}</td>
-                                       <td>
-                                           <span className={`role-badge ${member.role}`}>
-                                               {member.role}
-                                           </span>
-                                       </td>
+                                        <tr key={member.user_id}>
+                                            <td className="name-cell">
+                                                {member.first_name ? `${member.first_name} ${member.last_name}` : <span className="pending">Profile Pending</span>}
+                                            </td>
+                                            <td>{member.email}</td>
+                                            <td>{member.phone || '—'}</td>
+                                            <td>{member.country || '—'}</td>
+                                            <td>{new Date(member.created_at).toLocaleDateString('en-GB')}</td>
+                                            <td>
+                                                <span className={`role-badge ${member.role}`}>
+                                                    {member.role}
+                                                </span>
+                                            </td>
                                             <td>
                                                 <button className="action-view-btn">View</button>
                                             </td>
