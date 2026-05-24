@@ -4,7 +4,7 @@ import axios from 'axios';
 import './Admin.css'; // Uses your same design system rules safely
 
 const MemberDetail = () => {
-    const { id } = useParams(); // Extracts the user_id from the browser URL address row
+    const { id } = useParams(); 
     const navigate = useNavigate();
     const [member, setMember] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const MemberDetail = () => {
                 setMember(response.data);
             } catch (err) {
                 console.error("Error fetching individual profile records:", err);
-                // Fallback catch if route profile target falls off array metrics
+                
                 alert("Could not load member data. Returning to overview dashboard.");
                 navigate('/admin/members');
             } finally {
@@ -73,7 +73,7 @@ const MemberDetail = () => {
                             <p style={{ fontSize: '16px', color: '#fff', margin: '5px 0 0 0' }}>{member.country || 'Not configured'}</p>
                         </div>
                         <div>
-                            <label style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', textTransform: 'uppercase' }}>System Registration Timestamp</label>
+                            <label style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', textTransform: 'uppercase' }}>Member Since</label>
                             <p style={{ fontSize: '16px', color: '#fff', margin: '5px 0 0 0' }}>
                                 {new Date(member.created_at).toLocaleString('en-GB')}
                             </p>

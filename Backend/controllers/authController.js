@@ -153,7 +153,19 @@ exports.getMemberById = async (req, res) => {
     try {
         // Safe query that pulls everything cleanly including our new status column
         const [rows] = await db.execute(
-            'SELECT * FROM users WHERE user_id = ?',
+            `SELECT 
+                u.user_id, 
+                u.username, 
+                u.email, 
+                u.role,  
+                u.created_at,
+                p.phone, 
+                p.country,
+                p.first_name,
+                p.last_name
+             FROM users u
+             LEFT JOIN user_profiles p ON u.user_id = p.user_id 
+             WHERE u.user_id = ?`,
             [memberId]
         );
 
@@ -165,7 +177,7 @@ exports.getMemberById = async (req, res) => {
         // Return the first found row cleanly to Axios
         return res.status(200).json(rows[0]);
     } catch (error) {
-        // THIS WILL LOG THE EXACT SQL ERROR IN YOUR BACKEND TERMINAL SIMULTANEOUSLY 
+
         console.error("CRITICAL BACKEND SQL ERROR:", error.message);
         
         return res.status(500).json({ 
