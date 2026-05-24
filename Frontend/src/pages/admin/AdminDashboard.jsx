@@ -92,6 +92,8 @@ const AdminMembers = () => {
     const completedProfiles = members.filter(m => m.first_name).length;
     const pendingProfiles = totalMembers - completedProfiles;
 
+
+
     return (
         <div className="admin-wrapper">
             <div className="admin-container">
@@ -179,7 +181,7 @@ const AdminMembers = () => {
                                                 </span>
                                             </td>
                                             <td>
-                                                <button className="action-view-btn">View</button>
+                                                <button className="action-view-btn" onClick={() => navigate(`/admin/members/${member.user_id}`)}>View</button>
                                             </td>
                                         </tr>
                                     ))}

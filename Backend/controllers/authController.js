@@ -147,6 +147,27 @@ exports.forgotPassword = async (req, res) => {
     }
 };
 
+exports.getMemberById = async (req, res) => {
+    const memberId = req.params.id;
+
+    try {
+        // Query to match specified key indexing fields safely from database entries
+        const [rows] = await db.execute(
+            'SELECT user_id, username, email, first_name, last_name, phone, country, role, created_at FROM users WHERE user_id = ?',
+            [memberId]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "Member record not located in database context matrix." });
+        }
+
+        return res.status(200).json(rows[0]);
+    } catch (error) {
+        console.error("Backend error serving member selection query requests:", error);
+        return res.status(500).json({ message: "Internal server execution failure routing details query fetch requests." });
+    }
+};
+
 exports.resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;

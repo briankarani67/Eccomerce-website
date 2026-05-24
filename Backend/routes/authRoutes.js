@@ -27,6 +27,7 @@ router.get('/profile/:id', async (req, res) => {
     }
 });
 router.get('/members', verifyToken, authController.getAllMembers);
+router.get('/members/:id', verifyToken, authController.getMemberById);
 
 router.post('/create-profile', async (req, res) => {
     const { user_id, first_name, last_name, phone, country } = req.body;
