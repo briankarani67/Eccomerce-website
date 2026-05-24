@@ -151,20 +151,27 @@ exports.getMemberById = async (req, res) => {
     const memberId = req.params.id;
 
     try {
-        // Query to match specified key indexing fields safely from database entries
+        // Safe query that pulls everything cleanly including our new status column
         const [rows] = await db.execute(
-            'SELECT user_id, username, email, first_name, last_name, phone, country, role, created_at FROM users WHERE user_id = ?',
+            'SELECT * FROM users WHERE user_id = ?',
             [memberId]
         );
 
+        // If no user matches that ID
         if (rows.length === 0) {
-            return res.status(404).json({ message: "Member record not located in database context matrix." });
+            return res.status(404).json({ message: "Member record not found." });
         }
 
+        // Return the first found row cleanly to Axios
         return res.status(200).json(rows[0]);
     } catch (error) {
-        console.error("Backend error serving member selection query requests:", error);
-        return res.status(500).json({ message: "Internal server execution failure routing details query fetch requests." });
+        // THIS WILL LOG THE EXACT SQL ERROR IN YOUR BACKEND TERMINAL SIMULTANEOUSLY 
+        console.error("CRITICAL BACKEND SQL ERROR:", error.message);
+        
+        return res.status(500).json({ 
+            message: "Internal server database execution failure.",
+            error: error.message 
+        });
     }
 };
 

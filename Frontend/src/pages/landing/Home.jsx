@@ -23,8 +23,8 @@ function Home() {
           <h1>1 Year of full working</h1>
           <p>With top most services earn on your own schedule, EARN AS YOU WISH.</p>
           <div className="auth">
-            <Button text="Login" onclick={handleLogin} />
-            <Button text="Sign up" onclick={handleSignup} />
+            
+            <Button text="Get Started" onclick={handleSignup} />
           </div>
         </div>
         <div className="rightsidehero">
