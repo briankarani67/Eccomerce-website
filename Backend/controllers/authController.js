@@ -187,6 +187,29 @@ exports.getMemberById = async (req, res) => {
     }
 };
 
+exports.toggleUserStatus = async (req, res) => {
+    const { id } = req.params;
+    const { action } = req.body; 
+    
+   
+    const targetRole = action === 'deactivate' ? 'suspended' : 'user';
+
+    try {
+        await db.execute(
+            'UPDATE users SET role = ? WHERE user_id = ?',
+            [targetRole, id]
+        );
+
+        return res.status(200).json({ 
+            message: `User status updated to ${targetRole}.`,
+            newRole: targetRole
+        });
+    } catch (error) {
+        console.error("Status toggle error:", error.message);
+        return res.status(500).json({ message: "Database execution failure." });
+    }
+};
+
 exports.resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
