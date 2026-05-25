@@ -62,6 +62,30 @@ const AdminMembers = () => {
         fetchMembers();
     }, [navigate, API_URL]);
 
+    const handleToggleStatus = async (userId, currentRole) => {
+    const token = localStorage.getItem('token');
+    // If they are currently suspended, we want to 'activate' them back to a 'user'
+    const action = currentRole === 'suspended' ? 'activate' : 'deactivate';
+    const expectedNewRole = action === 'activate' ? 'user' : 'suspended';
+    
+    try {
+        await axios.put(`${API_URL}/api/auth/members/${userId}/status`, 
+            { action: action },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        
+        setMembers(prevMembers => 
+            prevMembers.map(member => 
+                member.user_id === userId ? { ...member, role: expectedNewRole } : member
+            )
+        );
+    } catch (err) {
+        console.error("Failed to change user status", err);
+        alert("Error altering user status privileges.");
+    }
+};
+
     // Handle Search and Filtering Logic
     useEffect(() => {
         let results = members;
@@ -163,6 +187,8 @@ const AdminMembers = () => {
                                         <th>Joined Date</th>
                                         <th>Role</th>
                                         <th>Action</th>
+                                        <th>Status</th>
+                                        <th>Toggle Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -183,6 +209,27 @@ const AdminMembers = () => {
                                             <td>
                                                 <button className="action-view-btn" onClick={() => navigate(`/admin/members/${member.user_id}`)}>View</button>
                                             </td>
+                                            
+                                            <td>
+                                                {/* STATUS BADGE - Based on role column */}
+                                                <span className={`status-tag ${member.role !== 'suspended' ? 'active' : 'suspended'}`}>
+                                                    {member.role !== 'suspended' ? 'Active' : 'Suspended'}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div style={{ display: 'flex', gap: '8px' }}>
+                                                    <button className="action-view-btn" onClick={() => navigate(`/admin/members/${member.user_id}`)}>View</button>
+                                                                        
+                                                    {/* DYNAMIC TOGGLE BUTTON - Based on role column */}
+                                                    <button 
+                                                        className={`action-toggle-btn ${member.role !== 'suspended' ? 'btn-suspend' : 'btn-activate'}`}
+                                                        onClick={() => handleToggleStatus(member.user_id, member.role)}
+                                                    >
+                                                        {member.role !== 'suspended' ? 'Deactivate' : 'Activate'}
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            
                                         </tr>
                                     ))}
                                     {filteredMembers.length === 0 && (
