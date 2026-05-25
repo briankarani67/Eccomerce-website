@@ -26,6 +26,12 @@ const Login = () => {
             // 1. Destructure the new hasProfile flag from your backend response
             const { token, user, hasProfile } = response.data;
 
+            if (user.role === 'suspended') {
+             return res.status(403).json({ 
+            message: "Your account has been suspended. Please contact administration for support." 
+             });
+}
+
             // 2. Store the token and user info
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));

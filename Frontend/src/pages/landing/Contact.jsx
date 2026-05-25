@@ -45,7 +45,7 @@ const Contact = () => {
                             <Mail color="#ffffff" size={32} />
                             <div>
                                 <h3>Direct Email</h3>
-                                <p>briankarani884@gmail.com</p>
+                                <p>brankar@gmail.com</p>
                             </div>
                         </div>
 

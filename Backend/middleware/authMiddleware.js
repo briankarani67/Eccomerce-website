@@ -10,11 +10,7 @@ exports.verifyToken = (req, res, next) => {
         return res.status(401).json({ message: "Access denied. No token provided." });
     }
 
-    if (user.role === 'suspended') {
-    return res.status(403).json({ 
-        message: "Your account has been suspended. Please contact administration for support." 
-    });
-}
+    
 
     try {
         // 3. Verify the token using your JWT secret from the .env file
