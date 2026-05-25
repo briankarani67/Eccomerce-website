@@ -13,7 +13,13 @@ exports.verifyToken = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded; 
         
-        const [rows] = await db.execute('SELECT role FROM users WHERE user_id = ?', [req.user.user_id]);
+        const targetId = req.user.user_id || req.user.id;
+
+        if (!targetId) {
+            return res.status(401).json({ message: "Invalid session token identity structure." });
+        }
+
+        const [rows] = await db.execute('SELECT role FROM users WHERE user_id = ?', [targetId]);
 
         if (rows.length === 0 || rows[0].role === 'suspended') {
             return res.status(403).json({ 

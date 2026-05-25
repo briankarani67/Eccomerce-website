@@ -218,9 +218,7 @@ const AdminMembers = () => {
                                             </td>
                                             <td>
                                                 <div style={{ display: 'flex', gap: '8px' }}>
-                                                    <button className="action-view-btn" onClick={() => navigate(`/admin/members/${member.user_id}`)}>View</button>
-                                                                        
-                                                    {/* DYNAMIC TOGGLE BUTTON - Based on role column */}
+                                                    
                                                     <button 
                                                         className={`action-toggle-btn ${member.role !== 'suspended' ? 'btn-suspend' : 'btn-activate'}`}
                                                         onClick={() => handleToggleStatus(member.user_id, member.role)}
