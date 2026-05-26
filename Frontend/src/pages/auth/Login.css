@@ -57,6 +57,28 @@
     text-decoration: none;
 }
 
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-container input {
+    width: 100%;
+    padding: 0.75rem;
+    padding-right: 2.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.password-input-container input:focus {
+    outline: none;
+    border-color: #235c08;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
 .input-field input {
     padding: 0.75rem;
     border: 1px solid #d1d5db;
@@ -69,6 +91,25 @@
     outline: none;
     border-color: #235c08;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0.85rem;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    transition: color 0.2s;
+}
+
+.password-toggle-btn:hover {
+    color: #235c08;
 }
 
 .login-button {

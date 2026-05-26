@@ -3,11 +3,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import { loginUser } from '../../api/authApi';
 import './Login.css'; // Create this file in the same folder
 import LoadingOverlay from './LoadingOverlay';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     
     const navigate = useNavigate();
 
@@ -15,7 +17,7 @@ const Login = () => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
- const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
@@ -27,10 +29,10 @@ const Login = () => {
             const { token, user, hasProfile } = response.data;
 
             if (user.role === 'suspended') {
-             return res.status(403).json({ 
-            message: "Your account has been suspended. Please contact administration for support." 
-             });
-}
+                 return res.status(403).json({ 
+                message: "Your account has been suspended. Please contact administration for support." 
+                 });
+            }
 
             // 2. Store the token and user info
             localStorage.setItem('token', token);
@@ -83,14 +85,23 @@ const Login = () => {
                             <label htmlFor="password">Password</label>
                             <Link to="/forgotpassword" id="forgot-link">Forgot?</Link>
                         </div>
-                        <input 
-                            type="password" 
-                            id="password"
-                            name="password"
-                            placeholder="••••••••"
-                            required 
-                            onChange={handleChange}
-                        />
+                        <div className="password-input-container">
+                            <input 
+                                type={showPassword ? "text" : "password"} 
+                                id="password"
+                                name="password"
+                                placeholder="••••••••"
+                                required 
+                                onChange={handleChange}
+                            />
+                            <button 
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" className="login-button" disabled={loading}>
