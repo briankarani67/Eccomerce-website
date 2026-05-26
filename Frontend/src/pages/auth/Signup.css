@@ -1,127 +1,272 @@
-/* Container to center everything on the page */
-.auth-wrapper {
+/* .login-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #064420; /* Light gray background */
-    font-family: 'Inter', sans-serif;
+    min-height: 90vh;
+    background-color: #064420;
 }
 
-/* The white card containing the form */
-.auth-card {
+.login-card {
     background: #ffffff;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
-    text-align: center;
+    max-width: 420px;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-.auth-card h2 {
+.login-header h2 {
+    font-size: 1.8rem;
+    color: #111827;
     margin-bottom: 0.5rem;
-    color: #333;
 }
 
-.auth-card p {
-    color: #777;
-    font-size: 0.9rem;
+.login-header p {
+    color: #6b7280;
     margin-bottom: 2rem;
 }
 
-/* Form layout */
-.auth-form {
+.login-form {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.5rem;
 }
 
-.input-group {
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
 }
 
-.input-group label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #555;
+.input-field label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
 }
 
-.input-group input {
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+.input-field input {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: all 0.2s;
 }
 
-.input-group input:focus {
+.input-field input:focus {
     outline: none;
-    border-color: #235c08; 
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+    border-color: #235c08;
+    box-shadow: 0 0 0 3px rgba(35, 92, 8, 0.1);
 }
 
-/* Button Styling */
-.auth-btn {
+.login-button {
     background-color: #235c08;
     color: white;
-    padding: 0.9rem;
+    padding: 0.75rem;
     border: none;
-    border-radius: 6px;
-    font-size: 1rem;
+    border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 0.5rem;
+    transition: background 0.2s;
 }
 
-.auth-btn:hover {
+.login-button:hover {
     background-color: #235c08;
 }
 
-/* Status Message */
-.status-msg {
-    margin-top: 1.5rem;
-    padding: 0.7rem;
-    background-color: #f8d7da;
-    color: #721c24;
-    border-radius: 4px;
-    font-size: 0.9rem;
+.login-button:disabled {
+    background-color: #2c6e0d;
+    cursor: not-allowed;
 }
 
-.auth-footer {
-    margin-top: 1.5rem;
-    font-size: 0.85rem;
-}
-
-.auth-footer a {
-    color: #235c08;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-/* Base style for the message box */
-.status-msg {
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 4px;
+.error-banner {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
     text-align: center;
+    border: 1px solid #fca5a5;
+}
+
+.success-banner {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+    border: 1px solid #c3e6cb;
     font-weight: 500;
 }
 
-/* Success style (Green) */
-.status-msg.success {
-    background-color: #d4edda; /* Light green background */
-    color: #155724;            /* Dark green text */
-    border: 1px solid #c3e6cb;
+.login-footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
 }
 
-/* Error style (Red) */
-.status-msg.error {
-    background-color: #f8d7da; /* Light red background */
-    color: #721c24;            /* Dark red text */
-    border: 1px solid #f5c6cb;
+.login-footer a {
+    color: #235c08;
+    font-weight: 600;
+    text-decoration: none;
+} */
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background-color: #064420;
+}
+
+.login-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.login-header h2 {
+    font-size: 1.8rem;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.login-header p {
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.input-field label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-container input {
+    width: 100%;
+    padding: 0.75rem;
+    padding-right: 3rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.password-input-container input:focus {
+    outline: none;
+    border-color: #235c08;
+    box-shadow: 0 0 0 3px rgba(35, 92, 8, 0.1);
+}
+
+.input-field input {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.input-field input:focus {
+    outline: none;
+    border-color: #235c08;
+    box-shadow: 0 0 0 3px rgba(35, 92, 8, 0.1);
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.25rem;
+    user-select: none;
+}
+
+.password-toggle-btn:hover {
+    color: #235c08;
+}
+
+.login-button {
+    background-color: #235c08;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-button:hover {
+    background-color: #235c08;
+}
+
+.login-button:disabled {
+    background-color: #2c6e0d;
+    cursor: not-allowed;
+}
+
+.error-banner {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+    border: 1px solid #fca5a5;
+}
+
+.success-banner {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+    border: 1px solid #c3e6cb;
+    font-weight: 500;
+}
+
+.login-footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.login-footer a {
+    color: #235c08;
+    font-weight: 600;
+    text-decoration: none;
 }

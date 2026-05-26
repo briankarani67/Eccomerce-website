@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PublicLayout from './components/PublicLayout';
 import Home from './pages/landing/Home';
@@ -17,6 +18,10 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import MemberDetail from './pages/admin/MemberDetail';
 
 function App() {
+  useEffect(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+    }, []);
   return (
     <div className="App">
     <Routes>
